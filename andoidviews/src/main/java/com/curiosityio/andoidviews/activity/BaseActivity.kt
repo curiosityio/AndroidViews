@@ -14,6 +14,8 @@ import com.curiosityio.andoidviews.R
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    var backButtonPressedAlready = false
+
     interface BackPressedListener {
         fun backPressed(): Boolean
     }
@@ -48,16 +50,22 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun getInitialFragment(): Fragment?
 
     override fun onBackPressed() {
-        if (backPressedListener != null) {
-            if (!backPressedListener!!.backPressed()) {
-                if (supportFragmentManager.backStackEntryCount > 0) {
-                    supportFragmentManager.popBackStack()
-                } else {
-                    super.onBackPressed()
+        if (!backButtonPressedAlready) {
+            backButtonPressedAlready = true
+
+            if (backPressedListener != null) {
+                if (!backPressedListener!!.backPressed()) {
+                    if (supportFragmentManager.backStackEntryCount > 0) {
+                        supportFragmentManager.popBackStack()
+                    } else {
+                        super.onBackPressed()
+                    }
                 }
+            } else {
+                super.onBackPressed()
             }
-        } else {
-            super.onBackPressed()
+
+            backButtonPressedAlready = false
         }
     }
 
