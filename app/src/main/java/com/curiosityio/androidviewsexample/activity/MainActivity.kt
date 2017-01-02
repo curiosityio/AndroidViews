@@ -1,6 +1,6 @@
 package com.curiosityio.androidviewsexample.activity
 
-import android.app.Fragment
+import android.support.v4.app.Fragment
 import com.curiosityio.andoidviews.activity.BaseActivity
 import com.curiosityio.androidviewsexample.fragment.MainFragment
 

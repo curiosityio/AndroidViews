@@ -35,7 +35,7 @@ abstract class BaseToolbarActivity() : BaseActivity() {
 
     // Call from child class to make back button a X looking button instead of back button.
     protected fun useCloseButton() {
-        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white_24px)
+        supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_close_white)
     }
 
     // Call from child class to add back button to toolbar.

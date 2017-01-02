@@ -1,7 +1,7 @@
 package com.curiosityio.andoidviews.fragment
 
-import android.app.Fragment
 import android.content.Context
+import android.support.v4.app.Fragment
 import com.curiosityio.andoidviews.activity.BaseActivity
 
 abstract class BaseFragment() : Fragment() {
