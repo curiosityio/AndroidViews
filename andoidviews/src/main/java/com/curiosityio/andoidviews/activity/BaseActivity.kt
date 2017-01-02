@@ -1,12 +1,12 @@
 package com.curiosityio.andoidviews.activity
 
-import android.app.Fragment
-import android.app.FragmentTransaction
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentTransaction
 import android.support.v4.util.Pair
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -79,7 +79,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun setFragmentInContainer(fragment: Fragment?, fragmentContainer: Int, replace: Boolean = true, addToBackstack: Boolean = false) {
         fragment?.let { fragment ->
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+            val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
 
             if (replace) fragmentTransaction.replace(fragmentContainer, fragment) else fragmentTransaction.add(fragmentContainer, fragment)
             if (addToBackstack) fragmentTransaction.addToBackStack(null)
