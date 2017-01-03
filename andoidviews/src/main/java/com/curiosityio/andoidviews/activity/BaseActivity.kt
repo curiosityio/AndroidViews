@@ -15,6 +15,7 @@ import com.curiosityio.andoidviews.R
 abstract class BaseActivity : AppCompatActivity() {
 
     var backButtonPressedAlready = false
+    private var firstTimeShowingActivity: Boolean = false
 
     interface BackPressedListener {
         fun backPressed(): Boolean
@@ -26,9 +27,13 @@ abstract class BaseActivity : AppCompatActivity() {
 
         setContentView(getLayoutId())
 
-        if (savedInstanceState == null) {
-            addFragment(getInitialFragment(), getFragmentContainerId())
-        }
+        firstTimeShowingActivity = savedInstanceState == null
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (firstTimeShowingActivity) addFragment(getInitialFragment(), getFragmentContainerId())
     }
 
     open fun getLayoutId(): Int {
