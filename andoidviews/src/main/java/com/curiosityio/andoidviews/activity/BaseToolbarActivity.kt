@@ -15,16 +15,21 @@ abstract class BaseToolbarActivity() : BaseActivity() {
         setupViews()
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_base_toolbar
-    }
+    // Override to provide your own layout ID.
+    override fun getLayoutId(): Int = R.layout.activity_base_toolbar
 
-    override fun getFragmentContainerId(): Int {
-        return R.id.activity_base_toolbar_fragment_container
-    }
+    // Override to provide your own fragment ID.
+    override fun getFragmentContainerId(): Int = R.id.activity_base_toolbar_fragment_container
+
+    // Override to provide your own Toolbar.
+    open fun getToolbarId(): Int = R.id.toolbar
+
+    // Override to provide own color of Toolbar.
+    open fun getToolbarBackground(): Int = R.attr.colorPrimary
 
     private fun setupViews() {
-        toolbar = findViewById(R.id.toolbar) as Toolbar
+        toolbar = findViewById(getToolbarId()) as Toolbar
+        toolbar.setBackgroundColor(getToolbarBackground())
 
         setSupportActionBar(toolbar)
     }
