@@ -1,5 +1,6 @@
 package com.curiosityio.andoidviews.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -31,7 +32,7 @@ abstract class BaseToolbarActivity : BaseActivity() {
     open fun setFragmentBelowToolbar(): Boolean = true
 
     // Override to provide own color of Toolbar.
-    open fun getToolbarBackground(): Int = R.attr.colorPrimary
+    abstract fun getToolbarBackground(): Int
 
     private fun setupViews() {
         toolbar = findViewById(getToolbarId()) as Toolbar
