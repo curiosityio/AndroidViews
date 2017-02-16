@@ -9,16 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"/>
+    <ViewStub
+        android:id="@+id/toolbar_viewstub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <include
+        android:id="@+id/toolbar_bottom_shadow"
         layout="@layout/bottom_shadow"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/toolbar_viewstub"/>
 
 </RelativeLayout>

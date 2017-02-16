@@ -3,7 +3,9 @@ package com.curiosityio.andoidviews.activity
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import com.curiosityio.andoidviews.R
@@ -25,24 +27,36 @@ abstract class BaseToolbarActivity : BaseActivity() {
     // Override to provide your own fragment ID.
     override fun getFragmentContainerId(): Int = R.id.activity_base_toolbar_fragment_container
 
-    // Override to provide your own Toolbar.
-    open fun getToolbarId(): Int = R.id.toolbar
+    // We ask for sub class to provide toolbar so it's styled to the app theme, not the library theme.
+    abstract fun getToolbarLayout(): Int
+
+    // If you do not like the shadow below the Toolbar, override this.
+    open fun showShadowBelowToolbar(): Boolean = true
 
     // Override to decide if you want the embedded fragment under the toolbar or below it. Good for when you want to use a transparent toolbar.
     open fun setFragmentBelowToolbar(): Boolean = true
 
-    // Override to provide own color of Toolbar.
-    abstract fun getToolbarBackground(): Int
-
     private fun setupViews() {
-        toolbar = findViewById(getToolbarId()) as Toolbar
-        toolbar.setBackgroundColor(getToolbarBackground())
+        toolbar_viewstub.layoutResource = getToolbarLayout()
+        val inflatedView: View = toolbar_viewstub.inflate()
+
+        if (inflatedView !is Toolbar) {
+            throw RuntimeException("Your getToolbarLayout() does not return a Toolbar.")
+        } else {
+            toolbar = inflatedView
+        }
 
         setSupportActionBar(toolbar)
 
+        if (!showShadowBelowToolbar()) toolbar_bottom_shadow.visibility = View.GONE
+
         if (setFragmentBelowToolbar()) {
-            val params = activity_base_toolbar_fragment_container.layoutParams as RelativeLayout.LayoutParams
-            params.addRule(RelativeLayout.BELOW, getToolbarId())
+            if (toolbar.id == View.NO_ID) {
+                throw RuntimeException("Your toolbar must set an id if you want to use setFragmentBelowToolbar()")
+            }
+
+            val params = findViewById(getFragmentContainerId()).layoutParams as RelativeLayout.LayoutParams
+            params.addRule(RelativeLayout.BELOW, toolbar.id)
         }
     }
 
@@ -60,7 +74,8 @@ abstract class BaseToolbarActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun setToobarTitle(title: String) {
+    // If your toolbar has it's own way to set the title, override this function.
+    open fun setToobarTitle(title: String) {
         setTitle(title)
     }
 
