@@ -74,11 +74,11 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun replaceFragment(fragment: Fragment?, fragmentContainer: Int, addToBackstack: Boolean = false) {
+    protected fun replaceFragment(fragment: Fragment?, fragmentContainer: Int = getFragmentContainerId(), addToBackstack: Boolean = false) {
         setFragmentInContainer(fragment, fragmentContainer, true, addToBackstack)
     }
 
-    protected fun addFragment(fragment: Fragment?, fragmentContainer: Int) {
+    protected fun addFragment(fragment: Fragment?, fragmentContainer: Int = getFragmentContainerId()) {
         setFragmentInContainer(fragment, fragmentContainer, false)
     }
 
