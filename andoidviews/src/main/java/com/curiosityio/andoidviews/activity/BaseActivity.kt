@@ -17,7 +17,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private val firstTimeShowingActivityKey = "firstTimeShowingActivityKey.baseActivity"
 
     var backButtonPressedAlready = false
-    private var firstTimeShowingActivity: Boolean = false
+    private var firstTimeShowingActivity: Boolean = true
 
     interface BackPressedListener {
         fun backPressed(): Boolean
