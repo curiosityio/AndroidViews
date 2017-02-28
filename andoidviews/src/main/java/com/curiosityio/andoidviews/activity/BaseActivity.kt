@@ -14,6 +14,8 @@ import com.curiosityio.andoidviews.R
 
 abstract class BaseActivity : AppCompatActivity() {
 
+    private val firstTimeShowingActivityKey = "firstTimeShowingActivityKey.baseActivity"
+
     var backButtonPressedAlready = false
     private var firstTimeShowingActivity: Boolean = false
 
@@ -27,13 +29,24 @@ abstract class BaseActivity : AppCompatActivity() {
 
         setContentView(getLayoutId())
 
-        firstTimeShowingActivity = savedInstanceState == null
+        savedInstanceState?.let {
+            firstTimeShowingActivity = it.getBoolean(firstTimeShowingActivityKey)
+        }
     }
 
     override fun onStart() {
         super.onStart()
 
-        if (firstTimeShowingActivity) addFragment(getInitialFragment(), getFragmentContainerId())
+        if (firstTimeShowingActivity) {
+            addFragment(getInitialFragment(), getFragmentContainerId())
+            firstTimeShowingActivity = false
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState!!.putBoolean(firstTimeShowingActivityKey, firstTimeShowingActivity)
+
+        super.onSaveInstanceState(outState)
     }
 
     open fun getLayoutId(): Int {
