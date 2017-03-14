@@ -1,6 +1,5 @@
 package com.curiosityio.loadingemptyviews.widgets
 
-import android.R
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.annotation.TargetApi
@@ -14,7 +13,7 @@ import android.content.res.TypedArray
 import com.curiosityio.loadingemptyviews.widgets.LoadingView
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
-import com.curiosityio.andoidviews.R
+import com.curiosityio.loadingemptyviews.R
 
 open class LoadingView : LinearLayout {
 
@@ -38,19 +37,19 @@ open class LoadingView : LinearLayout {
     fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
         mContext = context
 
-        LayoutInflater.from(context).inflate(com.curiosityio.andoidviews.R.layout.view_loading, this, true)
+        LayoutInflater.from(context).inflate(R.layout.view_loading, this, true)
 
         orientation = VERTICAL
         gravity = Gravity.CENTER
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
-        mLoadingTextView = findViewById(com.curiosityio.andoidviews.R.id.loading_textview) as TextView
+        mLoadingTextView = findViewById(R.id.loading_textview) as TextView
 
-        val a = context.theme.obtainStyledAttributes(attrs, com.curiosityio.andoidviews.R.styleable.LoadingView, 0, 0)
+        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.LoadingView, 0, 0)
 
         try {
-            setLoadingText(a.getString(com.curiosityio.andoidviews.R.styleable.LoadingView_loading_loadingText))
-            setLightDarkMode(a.getInt(com.curiosityio.andoidviews.R.styleable.LoadingView_loading_lightDarkMode, LIGHT_MODE))
+            setLoadingText(a.getString(R.styleable.LoadingView_loading_loadingText))
+            setLightDarkMode(a.getInt(R.styleable.LoadingView_loading_lightDarkMode, LIGHT_MODE))
         } finally {
             a.recycle()
         }
@@ -58,9 +57,9 @@ open class LoadingView : LinearLayout {
 
     fun setLightDarkMode(mode: Int) {
         if (mode == LIGHT_MODE) {
-            mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, R.color.black))
+            mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.black))
         } else if (mode == DARK_MODE) {
-            mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+            mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white))
         }
     }
 

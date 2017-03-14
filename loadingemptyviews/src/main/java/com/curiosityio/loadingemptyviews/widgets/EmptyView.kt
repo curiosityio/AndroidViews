@@ -14,7 +14,7 @@ import android.content.res.TypedArray
 import com.curiosityio.loadingemptyviews.widgets.EmptyView
 import android.support.v4.content.ContextCompat
 import android.widget.ImageView
-import com.curiosityio.andoidviews.R
+import com.curiosityio.loadingemptyviews.R
 
 open class EmptyView : LinearLayout {
 
@@ -38,21 +38,21 @@ open class EmptyView : LinearLayout {
     fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
         mContext = context
 
-        LayoutInflater.from(context).inflate(com.curiosityio.andoidviews.R.layout.view_empty, this, true)
+        LayoutInflater.from(context).inflate(R.layout.view_empty, this, true)
 
         orientation = LinearLayout.VERTICAL
         gravity = Gravity.CENTER
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
-        mEmptyImageView = findViewById(com.curiosityio.andoidviews.R.id.empty_view_imageview) as ImageView
-        mEmptyTextView = findViewById(com.curiosityio.andoidviews.R.id.empty_view_textview) as TextView
+        mEmptyImageView = findViewById(R.id.empty_view_imageview) as ImageView
+        mEmptyTextView = findViewById(R.id.empty_view_textview) as TextView
 
-        val a = context.theme.obtainStyledAttributes(attrs, com.curiosityio.andoidviews.R.styleable.EmptyView, 0, 0)
+        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0)
 
         try {
-            setEmptyImageView(a.getResourceId(com.curiosityio.andoidviews.R.styleable.EmptyView_emptyView_emptyImageRes, -1))
-            setEmptyText(a.getString(com.curiosityio.andoidviews.R.styleable.EmptyView_emptyView_emptyText))
-            setLightDarkMode(a.getInt(com.curiosityio.andoidviews.R.styleable.EmptyView_emptyView_lightDarkMode, LIGHT_MODE))
+            setEmptyImageView(a.getResourceId(R.styleable.EmptyView_emptyView_emptyImageRes, -1))
+            setEmptyText(a.getString(R.styleable.EmptyView_emptyView_emptyText))
+            setLightDarkMode(a.getInt(R.styleable.EmptyView_emptyView_lightDarkMode, LIGHT_MODE))
         } finally {
             a.recycle()
         }
