@@ -3,9 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AndroidViews.iml" filepath="$PROJECT_DIR$/AndroidViews.iml" />
-      <module fileurl="file://$PROJECT_DIR$/andoidviews/andoidviews.iml" filepath="$PROJECT_DIR$/andoidviews/andoidviews.iml" />
+      <module fileurl="file://$PROJECT_DIR$/activities/activities.iml" filepath="$PROJECT_DIR$/activities/activities.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/copycatsnackbar/copycatsnackbar.iml" filepath="$PROJECT_DIR$/copycatsnackbar/copycatsnackbar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/expandedheightgridview/expandedheightgridview.iml" filepath="$PROJECT_DIR$/expandedheightgridview/expandedheightgridview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loadingemptyviews/loadingemptyviews.iml" filepath="$PROJECT_DIR$/loadingemptyviews/loadingemptyviews.iml" />
     </modules>
   </component>
 </project>

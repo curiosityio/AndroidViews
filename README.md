@@ -16,3 +16,28 @@ Library includes a Proguard file to configure AppCompat and Android Design Suppo
     android:minHeight="?attr/actionBarSize"
     android:background="@color/color_of_toolbar_here"/>
 ```
+
+# Install the modules:
+
+Handy activities you can extend to work with fragments or toolbars super easy.
+
+Warning: I hope to remove these classes eventually. I don't want to have Fragments or Activities you have to extend. Use extensions instead if you need to add functionality to fragments/activities.
+
+```
+compile 'com.curiosityio.androidviews:activities:commitOrTagHere'
+```
+
+Snackbar copy that you can put into your view hierarchy and have more control over when it appears. This is useful in the rare case that you have a view that refreshes a lot and your traditional Snackbar is attached to it.
+```
+compile 'com.curiosityio.androidviews:copycatsnackbar:commitOrTagHere'
+```
+
+GridView where it doesn't scroll. It's the full expanded height of all the cells inside of them. This is handy if you need to nest a GridView inside of something such as a RecyclerView row.
+```
+compile 'com.curiosityio.androidviews:expandedheightgridview:commitOrTagHere'
+```
+
+Views/ViewGroups used to show generic loading and empty views.
+```
+compile 'com.curiosityio.androidviews:loadingemptyviews:commitOrTagHere'
+```

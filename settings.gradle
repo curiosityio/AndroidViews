@@ -1,1 +1,1 @@
-include ':app', ':andoidviews', ':copycatsnackbar'
+include ':app', ':activities', ':copycatsnackbar', ':loadingemptyviews', ':expandedheightgridview'
