@@ -19,25 +19,35 @@ Library includes a Proguard file to configure AppCompat and Android Design Suppo
 
 # Install the modules:
 
-Handy activities you can extend to work with fragments or toolbars super easy.
-
-Warning: I hope to remove these classes eventually. I don't want to have Fragments or Activities you have to extend. Use extensions instead if you need to add functionality to fragments/activities.
+Use them all with this handy shortcut:
 
 ```
-compile 'com.curiosityio.androidviews:activities:commitOrTagHere'
+def latestAndroidViewsCommitOrTag = 'b871f1bb1e' # make sure to change b871f1bb1e to the commit or tag you wish.
+compile "com.github.curiosityio.AndroidViews:copycatsnackbar:$latestAndroidViewsCommitOrTag"
+compile "com.github.curiosityio.androidviews:activities:$latestAndroidViewsCommitOrTag"
+compile "com.github.curiosityio.androidviews:expandedheightgridview:$latestAndroidViewsCommitOrTag"
+compile "com.github.curiosityio.androidviews:loadingemptyviews:$latestAndroidViewsCommitOrTag"
+```
+
+...or pick and choose what modules you want to use:
+
+Handy activities you can extend to work with fragments or toolbars super easy.
+*Warning:* I hope to remove these classes eventually. I don't want to have Fragments or Activities you have to extend. Use extensions instead if you need to add functionality to fragments/activities.
+```
+compile 'com.github.curiosityio.androidviews:activities:commitOrTagHere'
 ```
 
 Snackbar copy that you can put into your view hierarchy and have more control over when it appears. This is useful in the rare case that you have a view that refreshes a lot and your traditional Snackbar is attached to it.
 ```
-compile 'com.curiosityio.androidviews:copycatsnackbar:commitOrTagHere'
+compile 'com.github.curiosityio.androidviews:copycatsnackbar:commitOrTagHere'
 ```
 
 GridView where it doesn't scroll. It's the full expanded height of all the cells inside of them. This is handy if you need to nest a GridView inside of something such as a RecyclerView row.
 ```
-compile 'com.curiosityio.androidviews:expandedheightgridview:commitOrTagHere'
+compile 'com.github.curiosityio.androidviews:expandedheightgridview:commitOrTagHere'
 ```
 
 Views/ViewGroups used to show generic loading and empty views.
 ```
-compile 'com.curiosityio.androidviews:loadingemptyviews:commitOrTagHere'
+compile 'com.github.curiosityio.androidviews:loadingemptyviews:commitOrTagHere'
 ```

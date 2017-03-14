@@ -43,6 +43,7 @@ open class EmptyView : LinearLayout {
         orientation = LinearLayout.VERTICAL
         gravity = Gravity.CENTER
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        setPadding(10, 0, 10, 0)
 
         mEmptyImageView = findViewById(R.id.empty_view_imageview) as ImageView
         mEmptyTextView = findViewById(R.id.empty_view_textview) as TextView

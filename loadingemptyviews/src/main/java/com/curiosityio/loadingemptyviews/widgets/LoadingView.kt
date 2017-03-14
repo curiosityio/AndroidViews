@@ -42,6 +42,7 @@ open class LoadingView : LinearLayout {
         orientation = VERTICAL
         gravity = Gravity.CENTER
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        setPadding(10, 0, 10, 0)
 
         mLoadingTextView = findViewById(R.id.loading_textview) as TextView
 

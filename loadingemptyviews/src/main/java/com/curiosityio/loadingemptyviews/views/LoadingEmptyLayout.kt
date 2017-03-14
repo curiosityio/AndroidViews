@@ -27,10 +27,10 @@ open class LoadingEmptyLayout : LinearLayout {
     private var mLightDarkMode: Int = 0
 
     private lateinit var mContentView: View
-    private lateinit var mLoadingView: com.curiosityio.loadingemptyviews.widgets.LoadingView
-    private lateinit var mEmptyView: com.curiosityio.loadingemptyviews.widgets.EmptyView
+    private lateinit var mLoadingView: LoadingView
+    private lateinit var mEmptyView: EmptyView
 
-    private lateinit var mCurrentlyShownType: CurrentlyShownType
+    private var mCurrentlyShownType: CurrentlyShownType? = null
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
@@ -42,7 +42,7 @@ open class LoadingEmptyLayout : LinearLayout {
     }
 
     fun getCurrentlyShownType(): CurrentlyShownType {
-        return mCurrentlyShownType
+        return mCurrentlyShownType!!
     }
 
     fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
@@ -74,11 +74,11 @@ open class LoadingEmptyLayout : LinearLayout {
         }
 
         mContentView = getChildAt(0)
-        mLoadingView = com.curiosityio.loadingemptyviews.widgets.LoadingView(mContext, mAttrs, mDefStyleAttr)
+        mLoadingView = LoadingView(mContext, mAttrs, mDefStyleAttr)
         mLoadingView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(mLoadingView)
 
-        mEmptyView = com.curiosityio.loadingemptyviews.widgets.EmptyView(mContext, mAttrs, mDefStyleAttr)
+        mEmptyView = EmptyView(mContext, mAttrs, mDefStyleAttr)
         mEmptyView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(mEmptyView)
 
@@ -89,7 +89,6 @@ open class LoadingEmptyLayout : LinearLayout {
         mEmptyView.setEmptyImageView(mEmptyViewDrawRes)
         mEmptyView.setLightDarkMode(mLightDarkMode)
 
-        mCurrentlyShownType = CurrentlyShownType.CONTENT
         showContentView(false)
     }
 
@@ -106,7 +105,7 @@ open class LoadingEmptyLayout : LinearLayout {
     }
 
     fun showContentView(fade: Boolean) {
-        if (mCurrentlyShownType === CurrentlyShownType.CONTENT) {
+        if (mCurrentlyShownType == CurrentlyShownType.CONTENT) {
             return
         }
 
@@ -118,7 +117,6 @@ open class LoadingEmptyLayout : LinearLayout {
                 override fun onAnimationStart(animation: Animator) {
                     mContentView.visibility = View.GONE
                 }
-
                 override fun onAnimationEnd(animation: Animator) {
                     mLoadingView.visibility = View.GONE
                     mEmptyView.visibility = View.GONE
@@ -126,10 +124,8 @@ open class LoadingEmptyLayout : LinearLayout {
 
                     ObjectAnimator.ofFloat(mContentView, "alpha", 0f, 1f).setDuration(200).start()
                 }
-
                 override fun onAnimationCancel(animation: Animator) {
                 }
-
                 override fun onAnimationRepeat(animation: Animator) {
                 }
             })
@@ -154,7 +150,6 @@ open class LoadingEmptyLayout : LinearLayout {
                 override fun onAnimationStart(animation: Animator) {
                     mLoadingView.visibility = View.GONE
                 }
-
                 override fun onAnimationEnd(animation: Animator) {
                     mContentView.visibility = View.GONE
                     mEmptyView.visibility = View.GONE
@@ -162,10 +157,8 @@ open class LoadingEmptyLayout : LinearLayout {
 
                     ObjectAnimator.ofFloat(mLoadingView, "alpha", 0f, 1f).setDuration(200).start()
                 }
-
                 override fun onAnimationCancel(animation: Animator) {
                 }
-
                 override fun onAnimationRepeat(animation: Animator) {
                 }
             })
