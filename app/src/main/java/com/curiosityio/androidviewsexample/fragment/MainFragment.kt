@@ -1,13 +1,15 @@
 package com.curiosityio.androidviewsexample.fragment
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.curiosityio.andoidviews.fragment.BaseFragment
 import com.curiosityio.androidviewsexample.R
+import com.curiosityio.copycatsnackbar.SnackbarCopyCatView
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
-open class MainFragment : BaseFragment() {
+open class MainFragment : Fragment() {
 
     companion object {
         fun getInstance(): MainFragment {
@@ -17,6 +19,9 @@ open class MainFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater!!.inflate(R.layout.fragment_main, container, false)
+
+        view.show_snackbar_copycat.setOnClickListener { view.main_fragment_copy_cat_snackbar.show() }
+        view.hide_snackbar_copycat.setOnClickListener { view.main_fragment_copy_cat_snackbar.dismiss() }
 
         return view
     }

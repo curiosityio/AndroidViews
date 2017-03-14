@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidViews.iml" filepath="$PROJECT_DIR$/AndroidViews.iml" />
       <module fileurl="file://$PROJECT_DIR$/andoidviews/andoidviews.iml" filepath="$PROJECT_DIR$/andoidviews/andoidviews.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/copycatsnackbar/copycatsnackbar.iml" filepath="$PROJECT_DIR$/copycatsnackbar/copycatsnackbar.iml" />
     </modules>
   </component>
 </project>

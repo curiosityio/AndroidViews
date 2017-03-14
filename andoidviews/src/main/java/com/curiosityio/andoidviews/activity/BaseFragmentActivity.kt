@@ -12,9 +12,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.curiosityio.andoidviews.R
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseFragmentActivity : AppCompatActivity() {
 
-    private val firstTimeShowingActivityKey = "firstTimeShowingActivityKey.baseActivity"
+    private val firstTimeShowingActivityKey = "firstTimeShowingActivityKey.baseFragmentActivity"
 
     var backButtonPressedAlready = false
     private var firstTimeShowingActivity: Boolean = true
@@ -49,19 +49,10 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
-    open fun getLayoutId(): Int {
-        return R.layout.activity_base
-    }
+    open fun getLayoutId(): Int = R.layout.activity_base
+    open fun getFragmentContainerId(): Int = R.id.fragment_container
 
-    open fun getFragmentContainerId(): Int {
-        return R.id.fragment_container
-    }
-
-    override fun setContentView(layoutResID: Int) {
-        if (layoutResID != getLayoutId()) {
-            throw RuntimeException("You cannot call setContentView() directly. Must override getLayoutId() and BaseActivity will call it for you.")
-        }
-
+    override final fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
     }
 
@@ -126,8 +117,4 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-}
-
-fun BaseActivity.isOrientationPortrait(): Boolean {
-    return resources.configuration.orientation === Configuration.ORIENTATION_PORTRAIT
 }

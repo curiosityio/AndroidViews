@@ -11,7 +11,7 @@ import android.widget.RelativeLayout
 import com.curiosityio.andoidviews.R
 import kotlinx.android.synthetic.main.activity_base_toolbar.*
 
-abstract class BaseToolbarActivity : BaseActivity() {
+abstract class BaseToolbarActivity : BaseFragmentActivity() {
 
     protected lateinit var toolbar: Toolbar
 
@@ -24,7 +24,7 @@ abstract class BaseToolbarActivity : BaseActivity() {
     // Override to provide your own layout ID.
     override fun getLayoutId(): Int = R.layout.activity_base_toolbar
 
-    // Override to provide your own fragment ID.
+    // Override to provide your own fragment container ID.
     override fun getFragmentContainerId(): Int = R.id.activity_base_toolbar_fragment_container
 
     // We ask for sub class to provide toolbar so it's styled to the app theme, not the library theme.
@@ -58,10 +58,6 @@ abstract class BaseToolbarActivity : BaseActivity() {
             val params = findViewById(getFragmentContainerId()).layoutParams as RelativeLayout.LayoutParams
             params.addRule(RelativeLayout.BELOW, toolbar.id)
         }
-    }
-
-    override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
     }
 
     // Call from child class to make back button a X looking button instead of back button.
