@@ -18,8 +18,8 @@ import com.curiosityio.loadingemptyviews.R
 
 open class EmptyView : LinearLayout {
 
-    val LIGHT_MODE = 0
-    val DARK_MODE = 1
+    val LIGHT_VIEW = 0
+    val DARK_VIEW = 1
 
     private lateinit var mContext: Context
 
@@ -53,16 +53,16 @@ open class EmptyView : LinearLayout {
         try {
             setEmptyImageView(a.getResourceId(R.styleable.EmptyView_emptyView_emptyImageRes, -1))
             setEmptyText(a.getString(R.styleable.EmptyView_emptyView_emptyText))
-            setLightDarkMode(a.getInt(R.styleable.EmptyView_emptyView_lightDarkMode, LIGHT_MODE))
+            setLightDarkView(a.getInt(R.styleable.EmptyView_emptyView_lightDarkView, LIGHT_VIEW))
         } finally {
             a.recycle()
         }
     }
 
-    fun setLightDarkMode(mode: Int) {
-        if (mode == LIGHT_MODE) {
+    fun setLightDarkView(mode: Int) {
+        if (mode == DARK_VIEW) {
             mEmptyTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.black))
-        } else if (mode == DARK_MODE) {
+        } else if (mode == LIGHT_VIEW) {
             mEmptyTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white))
         }
     }

@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import com.curiosityio.loadingemptyviews.R
 import com.curiosityio.loadingemptyviews.widgets.EmptyView
 import com.curiosityio.loadingemptyviews.widgets.LoadingView
+import com.curiosityio.loadingemptyviews.widgets.LoadingView.Companion.LIGHT_VIEW
 
 open class LoadingEmptyLayout : LinearLayout {
 
@@ -20,11 +21,11 @@ open class LoadingEmptyLayout : LinearLayout {
     private lateinit var mAttrs: AttributeSet
     private var mDefStyleAttr: Int = 0
 
-    private var mLoadingViewText: String = ""
+    private var mLoadingViewText: String? = null
     private var mEmptyViewDrawRes: Int = 0
-    private var mEmptyViewMessage: String = ""
+    private var mEmptyViewMessage: String? = null
 
-    private var mLightDarkMode: Int = 0
+    private var mLightDarkView: Int = 0
 
     private lateinit var mContentView: View
     private lateinit var mLoadingView: LoadingView
@@ -50,13 +51,12 @@ open class LoadingEmptyLayout : LinearLayout {
         mAttrs = attrs
         mDefStyleAttr = defStyleAttr
 
-        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.LoadingEmptyLayout, 0, 0)
-
+        val a = context.obtainStyledAttributes(attrs, R.styleable.LoadingEmptyLayout, 0, 0)
         try {
             mLoadingViewText = a.getString(R.styleable.LoadingEmptyLayout_loadingView_loadingText)
             mEmptyViewDrawRes = a.getResourceId(R.styleable.LoadingEmptyLayout_loadingView_emptyImageRes, -1)
             mEmptyViewMessage = a.getString(R.styleable.LoadingEmptyLayout_loadingView_emptyText)
-            mLightDarkMode = a.getInt(R.styleable.LoadingEmptyLayout_loadingView_lightDarkMode, com.curiosityio.loadingemptyviews.widgets.LoadingView.LIGHT_MODE)
+            mLightDarkView = a.getInt(R.styleable.LoadingEmptyLayout_loadingView_lightDarkView, LIGHT_VIEW)
         } finally {
             a.recycle()
         }
@@ -82,12 +82,12 @@ open class LoadingEmptyLayout : LinearLayout {
         mEmptyView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(mEmptyView)
 
-        mLoadingView.setLightDarkMode(mLightDarkMode)
+        mLoadingView.setLightDarkView(mLightDarkView)
         mLoadingView.setLoadingText(mLoadingViewText)
 
         mEmptyView.setEmptyText(mEmptyViewMessage)
         mEmptyView.setEmptyImageView(mEmptyViewDrawRes)
-        mEmptyView.setLightDarkMode(mLightDarkMode)
+        mEmptyView.setLightDarkView(mLightDarkView)
 
         showContentView(false)
     }

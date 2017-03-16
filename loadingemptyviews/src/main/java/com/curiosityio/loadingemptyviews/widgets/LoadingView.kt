@@ -18,8 +18,8 @@ import com.curiosityio.loadingemptyviews.R
 open class LoadingView : LinearLayout {
 
     companion object {
-        val LIGHT_MODE = 0
-        val DARK_MODE = 1
+        val LIGHT_VIEW = 0
+        val DARK_VIEW = 1
     }
 
     private lateinit var mLoadingTextView: TextView
@@ -50,16 +50,16 @@ open class LoadingView : LinearLayout {
 
         try {
             setLoadingText(a.getString(R.styleable.LoadingView_loading_loadingText))
-            setLightDarkMode(a.getInt(R.styleable.LoadingView_loading_lightDarkMode, LIGHT_MODE))
+            setLightDarkView(a.getInt(R.styleable.LoadingView_loading_lightDarkView, LIGHT_VIEW))
         } finally {
             a.recycle()
         }
     }
 
-    fun setLightDarkMode(mode: Int) {
-        if (mode == LIGHT_MODE) {
+    fun setLightDarkView(mode: Int) {
+        if (mode == DARK_VIEW) {
             mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.black))
-        } else if (mode == DARK_MODE) {
+        } else if (mode == LIGHT_VIEW) {
             mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white))
         }
     }

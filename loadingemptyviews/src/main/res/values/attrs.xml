@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="LoadingView">
         <attr name="loading_loadingText" format="string"/>
-        <attr name="loading_lightDarkMode" format="enum">
+        <attr name="loading_lightDarkView" format="enum">
             <enum name="light" value="0" />
             <enum name="dark" value="1" />
         </attr>
@@ -10,7 +10,7 @@
     <declare-styleable name="EmptyView">
         <attr name="emptyView_emptyText" format="string"/>
         <attr name="emptyView_emptyImageRes" format="reference" />
-        <attr name="emptyView_lightDarkMode" format="enum">
+        <attr name="emptyView_lightDarkView" format="enum">
             <enum name="light" value="0" />
             <enum name="dark" value="1" />
         </attr>
@@ -19,7 +19,7 @@
         <attr name="loadingView_loadingText" format="string"/>
         <attr name="loadingView_emptyText" format="string"/>
         <attr name="loadingView_emptyImageRes" format="reference" />
-        <attr name="loadingView_lightDarkMode" format="enum">
+        <attr name="loadingView_lightDarkView" format="enum">
             <enum name="light" value="0" />
             <enum name="dark" value="1" />
         </attr>
