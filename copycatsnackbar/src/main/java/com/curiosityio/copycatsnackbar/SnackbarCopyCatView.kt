@@ -19,8 +19,6 @@ open class SnackbarCopyCatView : FrameLayout {
 
     private lateinit var mTextView: TextView
 
-    private var isShowing: Boolean = true
-
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initialize(context, attrs, defStyleAttr)
@@ -57,9 +55,7 @@ open class SnackbarCopyCatView : FrameLayout {
     }
 
     fun show(duration: Long = 400) {
-        if (!isShowing) {
-            isShowing = true
-
+        if (this.translationY == height.toFloat()) {
             val animatorSet = AnimatorSet()
             animatorSet.playTogether(
                     ObjectAnimator.ofFloat(this, "translationY", height.toFloat(), 0.toFloat())
@@ -70,9 +66,7 @@ open class SnackbarCopyCatView : FrameLayout {
     }
 
     fun dismiss(duration: Long = 400) {
-        if (isShowing) {
-            isShowing = false
-
+        if (this.translationY != height.toFloat()) {
             val animatorSet = AnimatorSet()
             animatorSet.playTogether(
                     ObjectAnimator.ofFloat(this, "translationY", 0.toFloat(), height.toFloat())
