@@ -19,6 +19,8 @@ open class SnackbarCopyCatView : FrameLayout {
 
     private lateinit var mTextView: TextView
 
+    private var isShowing: Boolean = true
+
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initialize(context, attrs, defStyleAttr)
@@ -47,7 +49,7 @@ open class SnackbarCopyCatView : FrameLayout {
             a.recycle()
         }
 
-        visibility = View.INVISIBLE // hide by default. dont want to show up for second when view loads.
+        dismiss(0)
     }
 
     fun setText(message: String?) {
@@ -55,23 +57,29 @@ open class SnackbarCopyCatView : FrameLayout {
     }
 
     fun show(duration: Long = 400) {
-        visibility = View.VISIBLE
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(
-                ObjectAnimator.ofFloat(this, "translationY", height.toFloat(), 0.toFloat())
-        )
-        animatorSet.duration = duration
-        animatorSet.start()
+        if (!isShowing) {
+            isShowing = true
+
+            val animatorSet = AnimatorSet()
+            animatorSet.playTogether(
+                    ObjectAnimator.ofFloat(this, "translationY", height.toFloat(), 0.toFloat())
+            )
+            animatorSet.duration = duration
+            animatorSet.start()
+        }
     }
 
     fun dismiss(duration: Long = 400) {
-        visibility = View.VISIBLE
-        val animatorSet = AnimatorSet()
-        animatorSet.playTogether(
-                ObjectAnimator.ofFloat(this, "translationY", 0.toFloat(), height.toFloat())
-        )
-        animatorSet.duration = duration
-        animatorSet.start()
+        if (isShowing) {
+            isShowing = false
+
+            val animatorSet = AnimatorSet()
+            animatorSet.playTogether(
+                    ObjectAnimator.ofFloat(this, "translationY", 0.toFloat(), height.toFloat())
+            )
+            animatorSet.duration = duration
+            animatorSet.start()
+        }
     }
 
 }
