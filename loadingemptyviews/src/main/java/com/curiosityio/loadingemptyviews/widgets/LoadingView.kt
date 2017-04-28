@@ -14,13 +14,9 @@ import com.curiosityio.loadingemptyviews.widgets.LoadingView
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import com.curiosityio.loadingemptyviews.R
+import com.curiosityio.loadingemptyviews.views.LoadingEmptyLayout
 
 open class LoadingView : LinearLayout {
-
-    companion object {
-        val LIGHT_VIEW = 0
-        val DARK_VIEW = 1
-    }
 
     private lateinit var mLoadingTextView: TextView
     private lateinit var mContext: Context
@@ -50,17 +46,18 @@ open class LoadingView : LinearLayout {
 
         try {
             setLoadingText(a.getString(R.styleable.LoadingView_loading_loadingText))
-            setLightDarkView(a.getInt(R.styleable.LoadingView_loading_lightDarkView, LIGHT_VIEW))
+            val lightDarkModeInt = a.getInt(R.styleable.LoadingView_loading_lightDarkView, LoadingEmptyLayout.LightDarkMode.LIGHT.mode)
+            setLightDarkMode(LoadingEmptyLayout.LightDarkMode.getModeFromInt(lightDarkModeInt))
         } finally {
             a.recycle()
         }
     }
 
-    fun setLightDarkView(mode: Int) {
-        if (mode == DARK_VIEW) {
-            mLoadingTextView.setTextColor(android.R.color.black)
-        } else if (mode == LIGHT_VIEW) {
-            mLoadingTextView.setTextColor(android.R.color.white)
+    fun setLightDarkMode(mode: LoadingEmptyLayout.LightDarkMode) {
+        if (mode == LoadingEmptyLayout.LightDarkMode.DARK) {
+            mLoadingTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+        } else if (mode == LoadingEmptyLayout.LightDarkMode.LIGHT) {
+            mLoadingTextView.setTextColor(ContextCompat.getColor(context, android.R.color.white))
         }
     }
 

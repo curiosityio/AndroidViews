@@ -13,9 +13,23 @@ import android.widget.LinearLayout
 import com.curiosityio.loadingemptyviews.R
 import com.curiosityio.loadingemptyviews.widgets.EmptyView
 import com.curiosityio.loadingemptyviews.widgets.LoadingView
-import com.curiosityio.loadingemptyviews.widgets.LoadingView.Companion.LIGHT_VIEW
 
 open class LoadingEmptyLayout : LinearLayout {
+
+    enum class LightDarkMode(val mode: Int) {
+        LIGHT(0),
+        DARK(1);
+
+        companion object {
+            fun getModeFromInt(mode: Int): LightDarkMode {
+                when (mode) {
+                    0 -> return LIGHT
+                    1 -> return DARK
+                    else -> throw RuntimeException("Value not 0 or 1 to get mode.")
+                }
+            }
+        }
+    }
 
     private lateinit var mContext: Context
     private lateinit var mAttrs: AttributeSet
@@ -24,8 +38,6 @@ open class LoadingEmptyLayout : LinearLayout {
     private var mLoadingViewText: String? = null
     private var mEmptyViewDrawRes: Int = 0
     private var mEmptyViewMessage: String? = null
-
-    private var mLightDarkView: Int = 0
 
     private lateinit var mContentView: View
     private lateinit var mLoadingView: LoadingView
@@ -50,16 +62,6 @@ open class LoadingEmptyLayout : LinearLayout {
         mContext = context
         mAttrs = attrs
         mDefStyleAttr = defStyleAttr
-
-        val a = context.obtainStyledAttributes(attrs, R.styleable.LoadingEmptyLayout, 0, 0)
-        try {
-            mLoadingViewText = a.getString(R.styleable.LoadingEmptyLayout_loadingView_loadingText)
-            mEmptyViewDrawRes = a.getResourceId(R.styleable.LoadingEmptyLayout_loadingView_emptyImageRes, -1)
-            mEmptyViewMessage = a.getString(R.styleable.LoadingEmptyLayout_loadingView_emptyText)
-            mLightDarkView = a.getInt(R.styleable.LoadingEmptyLayout_loadingView_lightDarkView, LIGHT_VIEW)
-        } finally {
-            a.recycle()
-        }
     }
 
     override fun onFinishInflate() {
@@ -73,6 +75,17 @@ open class LoadingEmptyLayout : LinearLayout {
             throw RuntimeException("You forgot to add a child view to " + javaClass.simpleName)
         }
 
+        var lightDarkModeInt: Int = LightDarkMode.LIGHT.mode
+        val a = context.obtainStyledAttributes(mAttrs, R.styleable.LoadingEmptyLayout, 0, 0)
+        try {
+            mLoadingViewText = a.getString(R.styleable.LoadingEmptyLayout_loadingView_loadingText)
+            mEmptyViewDrawRes = a.getResourceId(R.styleable.LoadingEmptyLayout_loadingView_emptyImageRes, -1)
+            mEmptyViewMessage = a.getString(R.styleable.LoadingEmptyLayout_loadingView_emptyText)
+            lightDarkModeInt = a.getInt(R.styleable.LoadingEmptyLayout_loadingView_lightDarkView, LightDarkMode.LIGHT.mode)
+        } finally {
+            a.recycle()
+        }
+
         mContentView = getChildAt(0)
         mLoadingView = LoadingView(mContext, mAttrs, mDefStyleAttr)
         mLoadingView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -82,14 +95,18 @@ open class LoadingEmptyLayout : LinearLayout {
         mEmptyView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         addView(mEmptyView)
 
-        mLoadingView.setLightDarkView(mLightDarkView)
         mLoadingView.setLoadingText(mLoadingViewText)
 
         mEmptyView.setEmptyText(mEmptyViewMessage)
         mEmptyView.setEmptyImageView(mEmptyViewDrawRes)
-        mEmptyView.setLightDarkView(mLightDarkView)
 
+        setLightDarkMode(LightDarkMode.getModeFromInt(lightDarkModeInt))
         showContentView(false)
+    }
+
+    fun setLightDarkMode(mode: LightDarkMode) {
+        mLoadingView.setLightDarkMode(mode)
+        mEmptyView.setLightDarkMode(mode)
     }
 
     fun setEmptyViewDrawRes(drawableRes: Int) {

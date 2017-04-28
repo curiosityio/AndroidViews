@@ -15,11 +15,9 @@ import com.curiosityio.loadingemptyviews.widgets.EmptyView
 import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import com.curiosityio.loadingemptyviews.R
+import com.curiosityio.loadingemptyviews.views.LoadingEmptyLayout
 
 open class EmptyView : LinearLayout {
-
-    val LIGHT_VIEW = 0
-    val DARK_VIEW = 1
 
     private lateinit var mContext: Context
 
@@ -53,17 +51,18 @@ open class EmptyView : LinearLayout {
         try {
             setEmptyImageView(a.getResourceId(R.styleable.EmptyView_emptyView_emptyImageRes, -1))
             setEmptyText(a.getString(R.styleable.EmptyView_emptyView_emptyText))
-            setLightDarkView(a.getInt(R.styleable.EmptyView_emptyView_lightDarkView, LIGHT_VIEW))
+            val lightDarkModeInt = a.getInt(R.styleable.EmptyView_emptyView_lightDarkView, LoadingEmptyLayout.LightDarkMode.LIGHT.mode)
+            setLightDarkMode(LoadingEmptyLayout.LightDarkMode.getModeFromInt(lightDarkModeInt))
         } finally {
             a.recycle()
         }
     }
 
-    fun setLightDarkView(mode: Int) {
-        if (mode == DARK_VIEW) {
-            mEmptyTextView.setTextColor(android.R.color.black)
-        } else if (mode == LIGHT_VIEW) {
-            mEmptyTextView.setTextColor(android.R.color.white)
+    fun setLightDarkMode(mode: LoadingEmptyLayout.LightDarkMode) {
+        if (mode == LoadingEmptyLayout.LightDarkMode.DARK) {
+            mEmptyTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
+        } else if (mode == LoadingEmptyLayout.LightDarkMode.LIGHT) {
+            mEmptyTextView.setTextColor(ContextCompat.getColor(context, android.R.color.white))
         }
     }
 
