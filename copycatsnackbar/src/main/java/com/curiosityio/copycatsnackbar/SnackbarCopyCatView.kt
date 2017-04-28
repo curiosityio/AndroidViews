@@ -47,14 +47,15 @@ open class SnackbarCopyCatView : FrameLayout {
             a.recycle()
         }
 
-        dismiss(0)
+        visibility = View.INVISIBLE // so the view does not show up by default.
     }
 
     fun setText(message: String?) {
         mTextView.text = message
     }
-
+    
     fun show(duration: Long = 400) {
+        visibility = View.VISIBLE
         if (this.translationY == height.toFloat()) {
             val animatorSet = AnimatorSet()
             animatorSet.playTogether(
@@ -66,6 +67,7 @@ open class SnackbarCopyCatView : FrameLayout {
     }
 
     fun dismiss(duration: Long = 400) {
+        visibility = View.VISIBLE
         if (this.translationY != height.toFloat()) {
             val animatorSet = AnimatorSet()
             animatorSet.playTogether(
