@@ -58,9 +58,9 @@ open class LoadingView : LinearLayout {
 
     fun setLightDarkView(mode: Int) {
         if (mode == DARK_VIEW) {
-            mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.black))
+            mLoadingTextView.setTextColor(android.R.color.black)
         } else if (mode == LIGHT_VIEW) {
-            mLoadingTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white))
+            mLoadingTextView.setTextColor(android.R.color.white)
         }
     }
 

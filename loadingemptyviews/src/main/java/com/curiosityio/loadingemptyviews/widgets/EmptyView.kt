@@ -61,9 +61,9 @@ open class EmptyView : LinearLayout {
 
     fun setLightDarkView(mode: Int) {
         if (mode == DARK_VIEW) {
-            mEmptyTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.black))
+            mEmptyTextView.setTextColor(android.R.color.black)
         } else if (mode == LIGHT_VIEW) {
-            mEmptyTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white))
+            mEmptyTextView.setTextColor(android.R.color.white)
         }
     }
 
