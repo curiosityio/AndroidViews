@@ -22,7 +22,7 @@ abstract class BaseFragmentActivity : AppCompatActivity() {
     interface BackPressedListener {
         fun backPressed(): Boolean
     }
-    protected var backPressedListener: BackPressedListener? = null
+    var backPressedListener: BackPressedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
