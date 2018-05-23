@@ -16,7 +16,7 @@ import com.levibostian.loadingemptyviews.R
 import com.levibostian.loadingemptyviews.extensions.getColorSupport
 import com.levibostian.loadingemptyviews.views.LoadingEmptyLayout
 
-open class LoadingView : LinearLayout {
+class LoadingView: LinearLayout {
 
     var loadingTextView: TextView? = null
         set(value) {

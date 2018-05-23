@@ -17,7 +17,7 @@ import com.levibostian.loadingemptyviews.R
 import com.levibostian.loadingemptyviews.extensions.getColorSupport
 import com.levibostian.loadingemptyviews.views.LoadingEmptyLayout
 
-open class EmptyView : LinearLayout {
+class EmptyView: LinearLayout {
 
     var emptyImageView: ImageView? = null
         set(value) {

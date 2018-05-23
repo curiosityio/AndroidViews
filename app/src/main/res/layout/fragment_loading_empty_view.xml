@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@android:color/holo_blue_bright"
+        custom:loadingEmpty_emptyImageRes="@drawable/ic_sentiment_dissatisfied_black_24dp"
         custom:loadingEmpty_emptyText="Empty view"
         custom:loadingEmpty_loadingText="Loading view"
         android:layout_weight="1">
