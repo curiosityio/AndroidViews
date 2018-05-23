@@ -19,13 +19,13 @@ import com.levibostian.loadingemptyviews.views.LoadingEmptyLayout
 
 open class EmptyView : LinearLayout {
 
-    private var emptyImageView: ImageView? = null
+    var emptyImageView: ImageView? = null
         set(value) {
             field = value
             // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.
             this.emptyImageRes = this.emptyImageRes
         }
-    private var emptyTextView: TextView? = null
+    var emptyTextView: TextView? = null
         set(value) {
             field = value
             // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.

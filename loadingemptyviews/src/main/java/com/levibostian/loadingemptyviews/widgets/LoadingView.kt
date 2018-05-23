@@ -18,7 +18,7 @@ import com.levibostian.loadingemptyviews.views.LoadingEmptyLayout
 
 open class LoadingView : LinearLayout {
 
-    private var loadingTextView: TextView? = null
+    var loadingTextView: TextView? = null
         set(value) {
             field = value
             // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.

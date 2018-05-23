@@ -2,10 +2,15 @@ package com.levibostian.androidviewsexample.activity
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
+import android.view.View
 import com.levibostian.androidviewsexample.R
 import com.levibostian.androidviewsexample.fragment.LoadingEmptyViewFragment
+import com.levibostian.loadingemptyviews.extensions.getColorSupport
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +30,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupView() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
+
         navigation_view.setNavigationItemSelectedListener { menuItem ->
             menuItem.isChecked = true
             drawer_layout.closeDrawers()
@@ -42,5 +53,16 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawer_layout.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
 }

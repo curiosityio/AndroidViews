@@ -17,40 +17,51 @@ open class LoadingEmptyLayout : LinearLayout {
 
     private lateinit var attrs: AttributeSet
 
-    private var loadingViewText: String? = null
+    var animationDuration: Long = 200
+        get() = field / 2 // When this value is retrieved, divide by 2 so that the total duration of the animation is this value.
+
+    var loadingViewText: String? = null
         set(value) {
             field = value
-            value?.let { loadingView?.loadingText = it }
+            value?.let { (loadingView as? LoadingView)?.apply { loadingText = it } }
         }
-    private var emptyViewDrawRes: Int = 0
+    var emptyViewDrawRes: Int = 0
         set(value) {
             field = value
-            emptyView?.emptyImageRes = value
+            (emptyView as? EmptyView)?.apply { emptyImageRes = value }
         }
 
-    private var emptyViewMessage: String? = null
+    var emptyViewMessage: String? = null
         set(value) {
             field = value
-            value?.let { emptyView?.emptyText = it }
+            (emptyView as? EmptyView)?.apply { emptyText = value }
         }
 
     private var contentView: View? = null
-    private var loadingView: LoadingView? = null
+    var loadingView: View? = null
         set(value) {
+            this.loadingView?.let { oldView -> removeView(oldView) }
             field = value
+            value?.let { newView -> addView(newView) }
+
             // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.
             this.loadingViewText = this.loadingViewText
         }
 
-    private var emptyView: EmptyView? = null
+    var emptyView: View? = null
         set(value) {
+            this.emptyView?.let { oldView -> removeView(oldView) }
             field = value
+            value?.let { newView -> addView(newView) }
+
             // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.
             this.emptyViewDrawRes = this.emptyViewDrawRes
             this.emptyViewMessage = this.emptyViewMessage
         }
 
     var currentlyShownType: CurrentlyShownType? = null
+
+    private var currentlyShownView: View? = null
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
@@ -86,15 +97,12 @@ open class LoadingEmptyLayout : LinearLayout {
 
         contentView = getChildAt(0)
 
-        val loadingView = LoadingView(context, attrs, 0)
-        loadingView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        addView(loadingView)
-        this.loadingView = loadingView
-
-        val emptyView = EmptyView(context, attrs, 0)
-        emptyView.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        addView(emptyView)
-        this.emptyView = emptyView
+        this.loadingView = LoadingView(context, attrs, 0).apply {
+            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
+        this.emptyView = EmptyView(context, attrs, 0).apply {
+            layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        }
 
         showContentView(false)
     }
@@ -104,7 +112,7 @@ open class LoadingEmptyLayout : LinearLayout {
         currentlyShownType = CurrentlyShownType.CONTENT
 
         if (fade) {
-            val fadeOut = ObjectAnimator.ofFloat(loadingView!!, "alpha", 1f, 0f).setDuration(200)
+            val fadeOut = ObjectAnimator.ofFloat(currentlyShownView!!, "alpha", 1f, 0f).setDuration(animationDuration)
             fadeOut.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {
                     contentView!!.visibility = View.GONE
@@ -114,7 +122,7 @@ open class LoadingEmptyLayout : LinearLayout {
                     emptyView!!.visibility = View.GONE
                     contentView!!.visibility = View.VISIBLE
 
-                    ObjectAnimator.ofFloat(contentView!!, "alpha", 0f, 1f).setDuration(200).start()
+                    ObjectAnimator.ofFloat(contentView!!, "alpha", 0f, 1f).setDuration(animationDuration).start()
                 }
                 override fun onAnimationCancel(animation: Animator) {
                 }
@@ -127,6 +135,8 @@ open class LoadingEmptyLayout : LinearLayout {
             loadingView!!.visibility = View.GONE
             emptyView!!.visibility = View.GONE
         }
+
+        currentlyShownView = contentView
     }
 
     fun showLoadingView(fade: Boolean) {
@@ -134,7 +144,7 @@ open class LoadingEmptyLayout : LinearLayout {
         currentlyShownType = CurrentlyShownType.LOADING
 
         if (fade) {
-            val fadeOut = ObjectAnimator.ofFloat(contentView!!, "alpha", 1f, 0f).setDuration(200)
+            val fadeOut = ObjectAnimator.ofFloat(currentlyShownView!!, "alpha", 1f, 0f).setDuration(animationDuration)
             fadeOut.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {
                     loadingView!!.visibility = View.GONE
@@ -144,7 +154,7 @@ open class LoadingEmptyLayout : LinearLayout {
                     emptyView!!.visibility = View.GONE
                     loadingView!!.visibility = View.VISIBLE
 
-                    ObjectAnimator.ofFloat(loadingView!!, "alpha", 0f, 1f).setDuration(200).start()
+                    ObjectAnimator.ofFloat(loadingView!!, "alpha", 0f, 1f).setDuration(animationDuration).start()
                 }
                 override fun onAnimationCancel(animation: Animator) {
                 }
@@ -157,6 +167,8 @@ open class LoadingEmptyLayout : LinearLayout {
             emptyView!!.visibility = View.GONE
             loadingView!!.visibility = View.VISIBLE
         }
+
+        currentlyShownView = loadingView
     }
 
     fun showEmptyView(fade: Boolean) {
@@ -164,7 +176,7 @@ open class LoadingEmptyLayout : LinearLayout {
         currentlyShownType = CurrentlyShownType.EMPTY
 
         if (fade) {
-            val fadeOut = ObjectAnimator.ofFloat(contentView!!, "alpha", 1f, 0f).setDuration(200)
+            val fadeOut = ObjectAnimator.ofFloat(currentlyShownView!!, "alpha", 1f, 0f).setDuration(animationDuration)
             fadeOut.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator) {
                     emptyView!!.visibility = View.GONE
@@ -174,7 +186,7 @@ open class LoadingEmptyLayout : LinearLayout {
                     loadingView!!.visibility = View.GONE
                     emptyView!!.visibility = View.VISIBLE
 
-                    ObjectAnimator.ofFloat(emptyView!!, "alpha", 0f, 1f).setDuration(200).start()
+                    ObjectAnimator.ofFloat(emptyView!!, "alpha", 0f, 1f).setDuration(animationDuration).start()
                 }
                 override fun onAnimationCancel(animation: Animator) {
                 }
@@ -187,6 +199,8 @@ open class LoadingEmptyLayout : LinearLayout {
             loadingView!!.visibility = View.GONE
             emptyView!!.visibility = View.VISIBLE
         }
+
+        currentlyShownView = emptyView
     }
 
     enum class CurrentlyShownType {
