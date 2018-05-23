@@ -12,17 +12,39 @@ import android.view.LayoutInflater
 import android.view.Gravity
 import android.content.res.TypedArray
 import com.levibostian.loadingemptyviews.widgets.EmptyView
-import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import com.levibostian.loadingemptyviews.R
+import com.levibostian.loadingemptyviews.extensions.getColorSupport
 import com.levibostian.loadingemptyviews.views.LoadingEmptyLayout
 
 open class EmptyView : LinearLayout {
 
-    private lateinit var mContext: Context
+    private var emptyImageView: ImageView? = null
+        set(value) {
+            field = value
+            // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.
+            this.emptyImageRes = this.emptyImageRes
+        }
+    private var emptyTextView: TextView? = null
+        set(value) {
+            field = value
+            // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.
+            this.emptyText = this.emptyText
+        }
 
-    private lateinit var mEmptyImageView: ImageView
-    private lateinit var mEmptyTextView: TextView
+    var emptyText: String? = null
+        set(value) {
+            field = value
+            value?.let { emptyTextView?.text = it }
+        }
+    var emptyImageRes: Int = 0
+        set(value) {
+            field = value
+            if (value >= 0) {
+                emptyImageView?.setImageResource(value)
+                emptyImageView?.visibility = VISIBLE
+            }
+        }
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
@@ -33,9 +55,7 @@ open class EmptyView : LinearLayout {
         initialize(context, attrs, defStyleAttr)
     }
 
-    fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
-        mContext = context
-
+    private fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
         LayoutInflater.from(context).inflate(R.layout.view_empty, this, true)
 
         orientation = LinearLayout.VERTICAL
@@ -43,39 +63,15 @@ open class EmptyView : LinearLayout {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         setPadding(10, 0, 10, 0)
 
-        mEmptyImageView = findViewById(R.id.empty_view_imageview) as ImageView
-        mEmptyTextView = findViewById(R.id.empty_view_textview) as TextView
+        emptyImageView = findViewById(R.id.empty_view_imageview)
+        emptyTextView = findViewById(R.id.empty_view_textview)
 
-        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0)
-
+        val a = context.obtainStyledAttributes(attrs, R.styleable.EmptyView, defStyleAttr, 0)
         try {
-            setEmptyImageView(a.getResourceId(R.styleable.EmptyView_emptyView_emptyImageRes, -1))
-            setEmptyText(a.getString(R.styleable.EmptyView_emptyView_emptyText))
-            val lightDarkModeInt = a.getInt(R.styleable.EmptyView_emptyView_lightDarkView, LoadingEmptyLayout.LightDarkMode.LIGHT.mode)
-            setLightDarkMode(LoadingEmptyLayout.LightDarkMode.getModeFromInt(lightDarkModeInt))
+            emptyImageRes = a.getResourceId(R.styleable.EmptyView_empty_emptyImageRes, -1)
+            emptyText = a.getString(R.styleable.EmptyView_empty_emptyText)
         } finally {
             a.recycle()
-        }
-    }
-
-    fun setLightDarkMode(mode: LoadingEmptyLayout.LightDarkMode) {
-        if (mode == LoadingEmptyLayout.LightDarkMode.DARK) {
-            mEmptyTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
-        } else if (mode == LoadingEmptyLayout.LightDarkMode.LIGHT) {
-            mEmptyTextView.setTextColor(ContextCompat.getColor(context, android.R.color.white))
-        }
-    }
-
-    fun setEmptyImageView(imageRes: Int) {
-        if (imageRes != -1) {
-            mEmptyImageView.setImageResource(imageRes)
-            mEmptyImageView.visibility = VISIBLE
-        }
-    }
-
-    fun setEmptyText(loadingText: String?) {
-        if (loadingText != null) {
-            mEmptyTextView.text = loadingText
         }
     }
 

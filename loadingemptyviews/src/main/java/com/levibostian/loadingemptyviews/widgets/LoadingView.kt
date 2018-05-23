@@ -11,15 +11,25 @@ import android.view.LayoutInflater
 import android.view.Gravity
 import android.content.res.TypedArray
 import com.levibostian.loadingemptyviews.widgets.LoadingView
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import com.levibostian.loadingemptyviews.R
+import com.levibostian.loadingemptyviews.extensions.getColorSupport
 import com.levibostian.loadingemptyviews.views.LoadingEmptyLayout
 
 open class LoadingView : LinearLayout {
 
-    private lateinit var mLoadingTextView: TextView
-    private lateinit var mContext: Context
+    private var loadingTextView: TextView? = null
+        set(value) {
+            field = value
+            // In case these variables were set while the EmptyView was null, reset them to run their code to set the properties in the EmptyView.
+            this.loadingText = this.loadingText
+        }
+
+    var loadingText: String? = ""
+        set(value) {
+            field = value
+            value?.let { loadingTextView?.text = it }
+        }
 
     constructor(context: Context, attrs: AttributeSet) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int): super(context, attrs, defStyleAttr) {
@@ -30,9 +40,7 @@ open class LoadingView : LinearLayout {
         initialize(context, attrs, defStyleAttr)
     }
 
-    fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
-        mContext = context
-
+    private fun initialize(context: Context, attrs: AttributeSet, defStyleAttr: Int) {
         LayoutInflater.from(context).inflate(R.layout.view_loading, this, true)
 
         orientation = VERTICAL
@@ -40,30 +48,13 @@ open class LoadingView : LinearLayout {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         setPadding(10, 0, 10, 0)
 
-        mLoadingTextView = findViewById(R.id.loading_textview) as TextView
+        loadingTextView = findViewById(R.id.loading_textview)
 
-        val a = context.theme.obtainStyledAttributes(attrs, R.styleable.LoadingView, 0, 0)
-
+        val a = context.obtainStyledAttributes(attrs, R.styleable.LoadingView, defStyleAttr, 0)
         try {
-            setLoadingText(a.getString(R.styleable.LoadingView_loading_loadingText))
-            val lightDarkModeInt = a.getInt(R.styleable.LoadingView_loading_lightDarkView, LoadingEmptyLayout.LightDarkMode.LIGHT.mode)
-            setLightDarkMode(LoadingEmptyLayout.LightDarkMode.getModeFromInt(lightDarkModeInt))
+            loadingText = a.getString(R.styleable.LoadingView_loading_loadingText)
         } finally {
             a.recycle()
-        }
-    }
-
-    fun setLightDarkMode(mode: LoadingEmptyLayout.LightDarkMode) {
-        if (mode == LoadingEmptyLayout.LightDarkMode.DARK) {
-            mLoadingTextView.setTextColor(ContextCompat.getColor(context, android.R.color.black))
-        } else if (mode == LoadingEmptyLayout.LightDarkMode.LIGHT) {
-            mLoadingTextView.setTextColor(ContextCompat.getColor(context, android.R.color.white))
-        }
-    }
-
-    fun setLoadingText(loadingText: String?) {
-        if (loadingText != null) {
-            mLoadingTextView.text = loadingText
         }
     }
 

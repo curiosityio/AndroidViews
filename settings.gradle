@@ -1,1 +1,1 @@
-include ':app', ':copycatsnackbar', ':loadingemptyviews', ':expandedheightgridview'
+include ':app', ':loadingemptyviews'

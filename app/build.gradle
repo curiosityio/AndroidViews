@@ -30,8 +30,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation project(':copycatsnackbar')
+    def supportLibVersion = "27.1.1"
+    implementation "com.android.support:appcompat-v7:$supportLibVersion"
+    implementation "com.android.support:design:$supportLibVersion"
     implementation project(':loadingemptyviews')
-    implementation project(':expandedheightgridview')
 }
