@@ -21,10 +21,10 @@ allprojects {
 }
 ```
 
-Then, install the modules for the views you wish to install:
+Then, install the gradle module:
 
 ```
-implementation "com.github.curiosityio.androidviews:loadingemptyviews:version-goes-here"
+implementation "com.github.levibostian:androidviews:version-goes-here"
 ```
 
 The latest release version at this time is: [![Release](https://jitpack.io/v/levibostian/AndroidViews.svg)](https://jitpack.io/#levibostian/AndroidViews)
