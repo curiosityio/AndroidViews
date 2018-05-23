@@ -9,18 +9,19 @@
         android:id="@+id/empty_view_imageview"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:src="@android:drawable/alert_dark_frame"/>
 
     <TextView
         android:id="@+id/empty_view_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FF9B9B9B"
-        android:fontFamily="sans-serif-light"
         android:layout_gravity="center"
         android:gravity="center"
-        android:paddingTop="8dp"
+        android:padding="18dp"
         android:textSize="16sp"
-        tools:text="long description \n bar"/>
+        android:textColor="@color/near_black"
+        tools:text="fowfofofowofwofweofwoefwoefwefowefowefoewfowefwoefowef"/>
 
 </merge>
