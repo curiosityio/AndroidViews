@@ -1,3 +1,11 @@
+# Notice:
+
+This project is no longer active. 
+
+Checkout the other Android views I have created that replace this project including [PleaseHold](https://github.com/levibostian/PleaseHold-Android), [Empty](https://github.com/levibostian/empty-Android), and [Swapper](https://github.com/levibostian/Swapper-Android). 
+
+I have realized that it's better to have multiple repos for each project instead of 1 repo that contains multiple projects. Having 1 repo that contains all custom views I have created doesn't work well for many reasons. 
+
 [![Release](https://jitpack.io/v/levibostian/AndroidViews.svg)](https://jitpack.io/#levibostian/AndroidViews)
 
 # AndroidViews
